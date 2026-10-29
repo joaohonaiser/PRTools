@@ -1,0 +1,367 @@
+/* =========================================================
+   Tokens de design
+   ========================================================= */
+:root {
+  color-scheme: dark;
+
+  --preto:      #080b12;
+  --preto-2:    #0c1420;
+  --preto-3:    #111a28;
+  --cinza:      #a6b2c5;
+  --cinza-2:    #8592a6;
+  --azul:       #1683ff;
+  --azul-claro: #75b5ff;
+  --borda:      #1f2c3f;
+  --borda-forte:#2a3a50;
+  --texto:      #edf3ff;
+  --texto-forte:#ffffff;
+  --sucesso:    #4ade80;
+  --erro:       #ff6b6b;
+
+  --raio:    12px;
+  --raio-sm:  9px;
+  --sombra-azul:  0 8px 24px #1683ff4d;
+  --sombra-azul-2:0 4px 14px #1683ff2a;
+  --anel-foco:    0 0 0 4px #1683ff26;
+}
+
+/* =========================================================
+   Base
+   ========================================================= */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 50% -20%, #1a3050 0%, transparent 55%),
+    radial-gradient(circle at 100% 0%,  #0f1e33 0%, transparent 40%),
+    var(--preto);
+  background-attachment: fixed;
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #1683ff55;
+  color: #fff;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 24px 0;
+  color: var(--texto);
+  font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar do tema */
+html { scrollbar-color: #24334a var(--preto); }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--preto); }
+::-webkit-scrollbar-thumb {
+  background: #24334a;
+  border-radius: 8px;
+  border: 2px solid var(--preto);
+}
+::-webkit-scrollbar-thumb:hover { background: #31455f; }
+
+/* =========================================================
+   Tipografia
+   ========================================================= */
+h1 {
+  margin: 0 0 18px;
+  color: var(--texto-forte);
+  line-height: 1.15;
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+/* Barra de acento acima do título */
+h1::before {
+  content: "";
+  display: block;
+  width: 42px;
+  height: 3px;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, var(--azul), var(--azul-claro));
+  border-radius: 2px;
+}
+
+p,
+li { color: var(--cinza); }
+
+p { margin: 0 0 14px; }
+
+/* Subtítulo / introdução */
+.lead {
+  color: #b8c4d8;
+  font-size: 1.02rem;
+  margin-bottom: 22px;
+  text-wrap: pretty;
+}
+
+/* Dicas menores */
+.hint {
+  font-size: .9rem;
+  color: var(--cinza-2);
+  margin-top: 12px;
+}
+
+strong { color: var(--texto-forte); font-weight: 600; }
+
+ol { padding-left: 24px; margin: 0 0 16px; }
+li { margin: 8px 0; }
+
+/* Atalhos de teclado */
+kbd {
+  display: inline-block;
+  padding: 2px 7px;
+  margin: 0 1px;
+  font: 12px/1.2 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color: #cfe2ff;
+  background: var(--preto-3);
+  border: 1px solid var(--borda-forte);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  vertical-align: 1px;
+}
+
+/* =========================================================
+   Botões (base compartilhada com o bookmarklet)
+   ========================================================= */
+button {
+  display: block;
+  margin: 28px auto;
+  padding: 12px 22px;
+  border: 1px solid #2e6bd1;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #1a8cff, #0b6ee0);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: .01em;
+  cursor: pointer;
+  box-shadow: var(--sombra-azul-2), inset 0 1px 0 #ffffff22;
+  transition: transform .15s ease, box-shadow .2s ease, filter .15s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: var(--sombra-azul), inset 0 1px 0 #ffffff22;
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+  filter: brightness(.97);
+}
+
+button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+button:focus-visible,
+textarea:focus-visible,
+.bookmarklet:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--azul-claro);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   Bookmarklet arrastável
+   ========================================================= */
+.bookmarklet {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0 12px;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #1683ff, #0a5fd0);
+  color: #fff;
+  border-radius: var(--raio);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: .01em;
+  cursor: grab;
+  user-select: none;
+  box-shadow:
+    0 6px 22px #1683ff3d,
+    inset 0 1px 0 #ffffff2e,
+    inset 0 -1px 0 #00000030;
+  transition: transform .15s ease, box-shadow .2s ease, filter .15s ease;
+}
+
+.bookmarklet:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow:
+    0 10px 32px #1683ff66,
+    inset 0 1px 0 #ffffff2e,
+    inset 0 -1px 0 #00000030;
+}
+
+.bookmarklet:active {
+  cursor: grabbing;
+  transform: translateY(0);
+  filter: brightness(.96);
+}
+
+/* =========================================================
+   Textarea
+   ========================================================= */
+textarea {
+  display: block;
+  width: 100%;
+  min-height: 100px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  resize: vertical;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-sm);
+  background: linear-gradient(180deg, #08101c, #070c14);
+  color: #cfe2ff;
+  caret-color: var(--azul-claro);
+  font: 12px/1.55 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  box-shadow: inset 0 1px 3px #00000080;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+textarea:hover:not(:focus-visible) {
+  border-color: var(--borda-forte);
+}
+
+textarea:focus-visible {
+  border-color: var(--azul);
+  box-shadow: inset 0 1px 3px #00000080, var(--anel-foco);
+  outline: none;
+}
+
+textarea::-webkit-scrollbar { width: 10px; }
+textarea::-webkit-scrollbar-track { background: #0a1220; border-radius: 8px; }
+textarea::-webkit-scrollbar-thumb {
+  background: #24334a;
+  border-radius: 8px;
+  border: 2px solid #0a1220;
+}
+textarea::-webkit-scrollbar-thumb:hover { background: #31455f; }
+
+/* =========================================================
+   Bloco <details> (código manual)
+   ========================================================= */
+details {
+  margin-top: 26px;
+  padding: 16px 20px;
+  background: var(--preto-2);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  transition: border-color .2s ease;
+}
+
+details[open] { border-color: var(--borda-forte); }
+
+summary {
+  position: relative;
+  padding: 4px 30px 4px 0;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+  color: #cfe2ff;
+}
+
+summary::-webkit-details-marker { display: none; }
+
+summary::after {
+  content: "▾";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--azul-claro);
+  transition: transform .2s ease;
+}
+
+details[open] summary::after { transform: translateY(-50%) rotate(180deg); }
+
+/* =========================================================
+   Status
+   ========================================================= */
+#status,
+.status {
+  min-height: 1.6em;
+  text-align: center;
+  font-weight: 500;
+  color: var(--status-color, var(--azul-claro));
+  transition: color .2s ease;
+}
+
+.status.success { --status-color: var(--sucesso); }
+.status.error   { --status-color: var(--erro); }
+
+/* =========================================================
+   Rodapé
+   ========================================================= */
+body::after {
+  content: "© 2026 Ashley Mura. Todos os direitos reservados.";
+  display: block;
+  margin-top: auto;
+  padding: 34px 0 22px;
+  color: #6e7c92;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: .02em;
+  border-top: 1px solid #131c2b;
+}
+
+/* =========================================================
+   Utilitário
+   ========================================================= */
+[hidden] { display: none !important; }
+
+/* =========================================================
+   Responsivo
+   ========================================================= */
+@media (max-width: 600px) {
+  body { padding: 32px 18px 0; }
+
+  h1 { font-size: 1.55rem; }
+  h1::before { margin-bottom: 16px; }
+
+  .bookmarklet {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+    margin: 22px 0;
+  }
+}
+
+@media (max-width: 400px) {
+  body { padding: 24px 14px 0; }
+  li    { margin: 6px 0; }
+  kbd   { font-size: 11px; padding: 1px 5px; }
+}
+
+/* =========================================================
+   Acessibilidade — movimento reduzido
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
